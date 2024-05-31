@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_setting"
+        android:id="@+id/home"
         android:title="@string/home"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_baseline_home_24"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/baseline_home"
         />
     <item
-        android:id="@+id/addStory"
+        android:id="@+id/history"
         android:title="@string/history"
         app:showAsAction="always"
-        android:icon="@drawable/ic_baseline_chat_24"
+        android:icon="@drawable/baseline_chat"
         />
     <item
-        android:id="@+id/account"
+        android:id="@+id/profile"
         android:title="@string/profile"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/baseline_profile"
         app:showAsAction="always" />
 </menu>

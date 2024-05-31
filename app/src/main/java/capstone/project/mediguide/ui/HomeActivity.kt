@@ -2,11 +2,9 @@ package capstone.project.mediguide.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import capstone.project.mediguide.R
 import capstone.project.mediguide.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -18,5 +16,34 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.GetStarted.setOnClickListener {
+            startActivity(Intent(this, ChatActivity::class.java))
+        }
+
+        binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    true
+                }
+
+                R.id.history -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
+                    true
+                }
+
+                R.id.profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        return true
     }
 }

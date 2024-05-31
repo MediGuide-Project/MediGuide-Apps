@@ -1,9 +1,9 @@
-package capstone.project.mediguide
+package capstone.project.mediguide.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import capstone.project.mediguide.R
 import capstone.project.mediguide.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

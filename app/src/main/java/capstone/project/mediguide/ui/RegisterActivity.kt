@@ -18,6 +18,11 @@ class RegisterActivity : AppCompatActivity() {
         binding.textLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
+
+        binding.regiterButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
     }
 
 }

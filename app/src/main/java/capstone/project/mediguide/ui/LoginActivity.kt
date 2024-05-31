@@ -20,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
+        binding.loginButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
     }
 
 }

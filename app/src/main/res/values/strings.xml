@@ -24,4 +24,9 @@
     <string name="home">Home</string>
     <string name="history">History</string>
     <string name="profile">Profile</string>
+    <string name="send_a_message">Send a message.</string>
+    <string name="back">back</string>
+    <string name="username">Username</string>
+    <string name="user_gmail_com">User@gmail.com</string>
+    <string name="logout">Logout</string>
 </resources>

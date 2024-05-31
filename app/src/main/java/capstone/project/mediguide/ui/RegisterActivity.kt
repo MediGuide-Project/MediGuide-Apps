@@ -1,4 +1,4 @@
-package capstone.project.mediguide
+package capstone.project.mediguide.ui
 
 import android.content.Intent
 import android.os.Bundle

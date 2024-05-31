@@ -1,8 +1,9 @@
-package capstone.project.mediguide
+package capstone.project.mediguide.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import capstone.project.mediguide.R
 import capstone.project.mediguide.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

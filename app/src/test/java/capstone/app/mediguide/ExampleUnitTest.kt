@@ -1,4 +1,4 @@
-package capstone.project.mediguide
+package capstone.app.mediguide
 
 import org.junit.Test
 

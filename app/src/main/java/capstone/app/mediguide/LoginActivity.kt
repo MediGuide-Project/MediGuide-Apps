@@ -1,10 +1,9 @@
-package capstone.project.mediguide.ui
+package capstone.app.mediguide
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import capstone.project.mediguide.R
-import capstone.project.mediguide.databinding.ActivityLoginBinding
+import capstone.app.mediguide.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 

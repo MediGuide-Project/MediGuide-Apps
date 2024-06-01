@@ -1,9 +1,9 @@
-package capstone.project.mediguide.ui
+package capstone.app.mediguide
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import capstone.project.mediguide.databinding.ActivityRegisterBinding
+import capstone.app.mediguide.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
 

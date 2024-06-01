@@ -1,24 +1,27 @@
-package capstone.project.mediguide.ui
+package capstone.app.mediguide
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import capstone.project.mediguide.R
-import capstone.project.mediguide.databinding.ActivityChatBinding
+import capstone.app.mediguide.databinding.ActivityHomeBinding
 
-class ChatActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChatBinding
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChatBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.GetStarted.setOnClickListener {
+            startActivity(Intent(this, ChatActivity::class.java))
+        }
 
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
                     true
                 }
 

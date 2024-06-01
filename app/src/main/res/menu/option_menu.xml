@@ -11,12 +11,12 @@
     <item
         android:id="@+id/history"
         android:title="@string/history"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_chat"
         />
     <item
         android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/baseline_profile"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

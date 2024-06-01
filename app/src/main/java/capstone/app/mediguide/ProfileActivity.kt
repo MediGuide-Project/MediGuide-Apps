@@ -1,18 +1,17 @@
-package capstone.project.mediguide.ui
+package capstone.app.mediguide
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import capstone.project.mediguide.R
-import capstone.project.mediguide.databinding.ActivityHistoryBinding
+import capstone.app.mediguide.databinding.ActivityProfileBinding
 
-class HistoryActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHistoryBinding
+    private lateinit var binding: ActivityProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHistoryBinding.inflate(layoutInflater)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
@@ -23,11 +22,11 @@ class HistoryActivity : AppCompatActivity() {
                 }
 
                 R.id.history -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
                     true
                 }
 
                 R.id.profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
                     true
                 }
 

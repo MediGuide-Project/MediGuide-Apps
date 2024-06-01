@@ -1,4 +1,4 @@
-package capstone.project.mediguide.ui
+package capstone.app.mediguide
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import capstone.project.mediguide.databinding.ActivitySplashScreenBinding
+import capstone.app.mediguide.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {

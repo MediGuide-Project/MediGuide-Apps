@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "capstone.project.mediguide"
+    namespace = "capstone.app.mediguide"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "capstone.project.mediguide"
+        applicationId = "capstone.app.mediguide"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

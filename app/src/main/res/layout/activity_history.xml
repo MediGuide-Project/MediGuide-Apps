@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
-    tools:context=".ui.HistoryActivity">
+    tools:context=".HistoryActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonBack"

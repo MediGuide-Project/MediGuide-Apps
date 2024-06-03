@@ -12,7 +12,6 @@ class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setContentView(binding.root)
         binding.bottomNavView.selectedItemId = R.id.history

@@ -39,6 +39,8 @@ class ProfileActivity : AppCompatActivity() {
                 .into(binding.profileImageView)
         }
 
+        setContentView(binding.root)
+        binding.bottomNavView.selectedItemId = R.id.profile
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -76,7 +78,7 @@ class ProfileActivity : AppCompatActivity() {
             val credentialManager = CredentialManager.create(this@ProfileActivity)
             auth.signOut()
             credentialManager.clearCredentialState(ClearCredentialStateRequest())
-            startActivity(Intent(this@ProfileActivity, LoginActivity::class.java))
+            startActivity(Intent(this@ProfileActivity, MainActivity::class.java))
             finish()
         }
 

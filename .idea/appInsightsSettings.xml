@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="capstone.app.mediguide" />
+                  <option name="mobileSdkAppId" value="1:846594039203:android:97b57b7d631d1cf7990e16" />
+                  <option name="projectId" value="mediguide-c38bb" />
+                  <option name="projectNumber" value="846594039203" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import capstone.app.mediguide.databinding.ActivityChatBinding
+import capstone.app.mediguide.databinding.ActivityHistoryBinding
 
 class ChatActivity : AppCompatActivity() {
 
@@ -14,29 +15,11 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setContentView(binding.root)
-        binding.bottomNavView.selectedItemId = R.id.home
-        binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    true
-                }
-
-                R.id.history -> {
-                    startActivity(Intent(this, HistoryActivity::class.java))
-                    true
-                }
-
-                R.id.profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
-                    true
-                }
-
-                else -> false
-            }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ChatFragment())
+                .commit()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

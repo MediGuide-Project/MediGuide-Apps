@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import capstone.app.mediguide.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -15,30 +16,32 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.GetStarted.setOnClickListener {
-            startActivity(Intent(this, ChatActivity::class.java))
-        }
+        // Load the initial fragment
+        loadFragment(HomeFragment())
 
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
+                    loadFragment(HomeFragment())
                     true
                 }
-
                 R.id.history -> {
-                    startActivity(Intent(this, HistoryActivity::class.java))
+                    loadFragment(HistoryFragment())
                     true
                 }
-
                 R.id.profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    loadFragment(ProfileFragment())
                     true
                 }
-
                 else -> false
             }
         }
+    }
 
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

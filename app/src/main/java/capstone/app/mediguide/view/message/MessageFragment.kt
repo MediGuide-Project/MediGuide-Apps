@@ -1,4 +1,4 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.view.message
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import capstone.app.mediguide.placeholder.PlaceholderContent
+import capstone.app.mediguide.R
+import capstone.app.mediguide.view.message.placeholder.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.

@@ -5,7 +5,6 @@
     android:id="@+id/messageF"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/darkGrey"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout

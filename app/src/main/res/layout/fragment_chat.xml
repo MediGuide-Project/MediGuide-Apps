@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkGrey"
-    tools:context=".ChatActivity">
+    tools:context=".fragment.ChatFragment"
+    android:background="@color/white">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -16,7 +16,20 @@
         android:layout_marginTop="16dp"
         android:contentDescription="@string/back"
         android:src="@drawable/baseline_back"
-        app:backgroundTint="@color/darkSilver"
+        app:backgroundTint="@color/Primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profileTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/chatbot"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/Primary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

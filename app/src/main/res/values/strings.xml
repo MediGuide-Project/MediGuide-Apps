@@ -31,6 +31,8 @@
     <string name="logout">Logout</string>
     <string name="or">OR</string>
     <string name="your_web_client_id">846594039203-679lqufc0akvr0k2nnldnuqe0us6rp9n.apps.googleusercontent.com</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chat">chat</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="chatbot">Chatbot</string>
 </resources>

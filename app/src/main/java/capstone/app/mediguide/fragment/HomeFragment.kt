@@ -1,13 +1,12 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.FragmentHomeBinding
-import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -27,7 +26,7 @@ class HomeFragment : Fragment() {
 
         binding.GetStarted.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ChatFragment())
+                .replace(R.id.frameFragment, ChatFragment())
                 .addToBackStack(null)
                 .commit()
         }

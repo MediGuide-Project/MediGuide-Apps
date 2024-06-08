@@ -1,4 +1,4 @@
-package capstone.app.mediguide.placeholder
+package capstone.app.mediguide.view.message.placeholder
 
 import java.util.ArrayList
 import java.util.HashMap

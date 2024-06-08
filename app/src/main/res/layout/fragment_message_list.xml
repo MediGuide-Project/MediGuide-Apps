@@ -9,6 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".messageFragment"
-    tools:listitem="@layout/fragment_message"
-    android:background="@color/darkGrey"/>
+    tools:context=".view.message.messageFragment"
+    tools:listitem="@layout/fragment_message"/>

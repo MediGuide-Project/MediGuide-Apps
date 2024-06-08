@@ -1,12 +1,10 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.view.message
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
-import capstone.app.mediguide.placeholder.PlaceholderContent.PlaceholderItem
+import capstone.app.mediguide.view.message.placeholder.PlaceholderContent.PlaceholderItem
 import capstone.app.mediguide.databinding.FragmentMessageBinding
 
 /**

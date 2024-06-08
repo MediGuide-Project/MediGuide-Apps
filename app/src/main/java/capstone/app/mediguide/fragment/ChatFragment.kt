@@ -1,4 +1,4 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,10 +26,5 @@ class ChatFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

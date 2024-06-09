@@ -56,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account"
-        app:startIconDrawable="@drawable/baseline_email">
+        app:startIconDrawable="@drawable/baseline_email"
+        app:startIconTint="@color/Primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
@@ -86,11 +87,13 @@
         android:textColorHint="@color/Primary"
         app:boxStrokeColor="@color/Primary"
         app:endIconMode="password_toggle"
-        app:hintTextColor="@color/white"
+        app:hintTextColor="@color/Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
-        app:startIconDrawable="@drawable/baseline_lock">
+        app:startIconDrawable="@drawable/baseline_lock"
+        app:startIconTint="@color/Primary"
+        app:endIconTint="@color/Primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"

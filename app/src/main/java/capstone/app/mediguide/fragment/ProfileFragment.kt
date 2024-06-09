@@ -36,13 +36,13 @@ class ProfileFragment : Fragment() {
         binding.username.text = currentUser.displayName
 
         db.collection("users").document(currentUser.uid).get().addOnSuccessListener { document ->
-                if (document != null) {
-                    val name = document.getString("name")
-                    binding.username.text = name
-                } else {
-                }
-            }.addOnFailureListener { exception ->
+            if (document != null) {
+                val name = document.getString("name")
+                binding.username.text = name
+            } else {
             }
+        }.addOnFailureListener { exception ->
+        }
 
         binding.emailTV.text = currentUser.email
 
@@ -50,8 +50,7 @@ class ProfileFragment : Fragment() {
         if (photoUrl != null) {
             Glide.with(this).load(photoUrl).into(binding.profileImageView)
         } else {
-            Glide.with(this).load(R.drawable.baseline_account_circle)
-                .into(binding.profileImageView)
+            Glide.with(this).load(R.drawable.baseline_account_circle).into(binding.profileImageView)
         }
 
         binding.Logout.setOnClickListener {

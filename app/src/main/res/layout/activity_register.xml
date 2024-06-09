@@ -57,7 +57,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account"
-        app:startIconDrawable="@drawable/baseline_person">
+        app:startIconDrawable="@drawable/baseline_person"
+        app:startIconTint="@color/Primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameEditText"
@@ -91,7 +92,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameEditTextLayout"
-        app:startIconDrawable="@drawable/baseline_email">
+        app:startIconDrawable="@drawable/baseline_email"
+        app:startIconTint="@color/Primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
@@ -102,7 +104,7 @@
             android:hint="@string/enter_your_email"
             android:inputType="textEmailAddress"
             android:paddingStart="44dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="RtlSymmetry,SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -121,11 +123,13 @@
         app:boxStrokeColor="@color/Primary"
         app:cursorColor="@color/Primary"
         app:endIconMode="password_toggle"
+        app:endIconTint="@color/Primary"
         app:hintTextColor="@color/Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
-        app:startIconDrawable="@drawable/baseline_lock">
+        app:startIconDrawable="@drawable/baseline_lock"
+        app:startIconTint="@color/Primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"

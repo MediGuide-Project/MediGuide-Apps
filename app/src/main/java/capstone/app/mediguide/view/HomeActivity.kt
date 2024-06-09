@@ -1,6 +1,7 @@
 package capstone.app.mediguide.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import capstone.app.mediguide.R
@@ -36,5 +37,13 @@ class HomeActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameFragment, fragment)
         fragmentTransaction.commit()
+    }
+
+    fun hideBottomNavView() {
+        binding.bottomNavView.visibility = View.GONE
+    }
+
+    fun showBottomNavView() {
+        binding.bottomNavView.visibility = View.VISIBLE
     }
 }

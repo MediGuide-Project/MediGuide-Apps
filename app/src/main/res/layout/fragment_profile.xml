@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkGrey"
-    tools:context=".ProfileFragment">
+    android:background="@drawable/bg_main"
+    tools:context=".fragment.ProfileFragment">
 
     <TextView
         android:id="@+id/profileTV"
@@ -16,6 +16,7 @@
         android:text="@string/profile"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +27,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="20dp"
+        tools:src="@tools:sample/avatars"
         app:civ_border_width="2dp"
         app:civ_border_color="@color/white"
         android:scaleType="centerCrop"
@@ -34,7 +36,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
     <TextView
         android:id="@+id/username"
@@ -69,15 +72,18 @@
         android:id="@+id/Logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
         android:background="@drawable/btn_login"
-        android:drawablePadding="8dp"
+        android:drawablePadding="20dp"
         android:gravity="center"
-        android:padding="14dp"
+        android:padding="12dp"
         android:text="@string/logout"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:drawableEndCompat="@drawable/baseline_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

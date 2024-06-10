@@ -1,10 +1,11 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.FragmentProfileBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -20,8 +21,7 @@ class ProfileFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,34 +33,24 @@ class ProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         currentUser = auth.currentUser!!
 
-        // Set user data to views
         binding.username.text = currentUser.displayName
 
-        db.collection("users").document(currentUser.uid)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val name = document.getString("name")
-                    binding.username.text = name
-                } else {
-                    // Handle error
-                }
+        db.collection("users").document(currentUser.uid).get().addOnSuccessListener { document ->
+            if (document != null) {
+                val name = document.getString("name")
+                binding.username.text = name
+            } else {
             }
-            .addOnFailureListener { exception ->
-                // Handle error
-            }
+        }.addOnFailureListener { exception ->
+        }
 
         binding.emailTV.text = currentUser.email
 
         val photoUrl = currentUser.photoUrl
         if (photoUrl != null) {
-            Glide.with(this)
-                .load(photoUrl)
-                .into(binding.profileImageView)
+            Glide.with(this).load(photoUrl).into(binding.profileImageView)
         } else {
-            Glide.with(this)
-                .load(R.drawable.baseline_account_circle_24)
-                .into(binding.profileImageView)
+            Glide.with(this).load(R.drawable.baseline_account_circle).into(binding.profileImageView)
         }
 
         binding.Logout.setOnClickListener {
@@ -70,7 +60,6 @@ class ProfileFragment : Fragment() {
 
     private fun signOut() {
         auth.signOut()
-        // Add logic to clear credentials and navigate to login screen
     }
 
     override fun onDestroyView() {

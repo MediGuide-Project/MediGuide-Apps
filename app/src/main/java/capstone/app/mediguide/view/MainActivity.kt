@@ -1,8 +1,9 @@
-package capstone.app.mediguide
+package capstone.app.mediguide.view
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth

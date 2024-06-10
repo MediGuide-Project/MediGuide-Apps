@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="darkGrey">#141718</color>
-    <color name="darkSilver">#232627</color>
-    <color name="Grey">#6F6F6F</color>
+    <color name="pureBlack">#000000</color>
+    <color name="pureWhite">#FFFFFF</color>
+
+    <color name="black">#141718</color>
+    <color name="white">#F6F6F6</color>
+
     <color name="Silver">#A0A0A5</color>
+    <color name="darkSilver">#232627</color>
+
+    <color name="Grey">#6F6F6F</color>
+    <color name="softGrey">#DFE0E0</color>
+    <color name="darkGrey">#141718</color>
+
+    <color name="Primary">#0095FF</color>
+    <color name="Secondary">#C3E6FF</color>
+
 </resources>

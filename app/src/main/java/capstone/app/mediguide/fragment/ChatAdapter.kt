@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import capstone.app.mediguide.databinding.ItemChatBinding
 import capstone.app.mediguide.model.ChatMessage
 
-class ChatAdapter(private val chatMessages: List<ChatMessage>) :
+class ChatAdapter(private val chatList: List<ChatMessage>) :
     RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
     class ChatViewHolder(val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root)
@@ -18,7 +18,7 @@ class ChatAdapter(private val chatMessages: List<ChatMessage>) :
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        val chatMessage = chatMessages[position]
+        val chatMessage = chatList[position]
         if (chatMessage.isUser) {
             holder.binding.userMessageTextView.visibility = View.VISIBLE
             holder.binding.botMessageTextView.visibility = View.GONE
@@ -30,5 +30,5 @@ class ChatAdapter(private val chatMessages: List<ChatMessage>) :
         }
     }
 
-    override fun getItemCount() = chatMessages.size
+    override fun getItemCount() = chatList.size
 }

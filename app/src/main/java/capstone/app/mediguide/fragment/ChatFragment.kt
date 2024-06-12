@@ -1,6 +1,8 @@
 package capstone.app.mediguide.fragment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,23 +13,57 @@ import capstone.app.mediguide.databinding.FragmentChatBinding
 import capstone.app.mediguide.model.ChatMessage
 import capstone.app.mediguide.view.HomeActivity
 import com.google.ai.client.generativeai.GenerativeModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.runBlocking
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
-    private val chatMessages = mutableListOf<ChatMessage>()
+    private val chatList = mutableListOf<ChatMessage>()
     private lateinit var chatAdapter: ChatAdapter
+    private val db: FirebaseFirestore = Firebase.firestore
+    private var currentUser: FirebaseUser? = null
+    private lateinit var auth: FirebaseAuth
+    private var currentChatTitle: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChatBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val chatId = arguments?.getString("chatId")
+        if (chatId != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("chats").document(chatId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val messages = document["messages"] as? List<String>
+                        messages?.let {
+                            for (message in it) {
+                                addMessageToChat(message, isUser = false)
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+        }
 
         binding.floatingActionButton.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -44,7 +80,15 @@ class ChatFragment : Fragment() {
 
         setupRecyclerView()
         binding.sendButton.setOnClickListener {
-            sendMessage()
+            val message = binding.question.text.toString().trim()
+            if (message.isNotEmpty()) {
+                addMessageToChat(message, true)
+                getResponse(message) { response ->
+                    addMessageToChat(response, false)
+                    saveChatToHistory(message, response)
+                }
+                binding.question.text?.clear()
+            }
         }
 
         binding.question.setOnEditorActionListener { v, actionId, event ->
@@ -58,28 +102,65 @@ class ChatFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        chatAdapter = ChatAdapter(chatMessages)
+        chatAdapter = ChatAdapter(chatList)
         binding.rvChatBot.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChatBot.adapter = chatAdapter
+    }
+
+    private fun addMessageToChat(message: String, isUser: Boolean) {
+        val chatMessage = ChatMessage(message, isUser)
+        chatList.add(chatMessage)
+        chatAdapter.notifyItemInserted(chatList.size - 1)
+        binding.rvChatBot.scrollToPosition(chatList.size - 1)
+    }
+
+    private fun saveChatToHistory(userMessage: String, botResponse: String) {
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid
+        if (userId != null) {
+            val chatTitle = userMessage.take(30)
+            val chatRef = db.collection("chats").document(userId)
+            chatRef.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val existingMessages = document["messages"] as? List<String>
+                    existingMessages?.let {
+                        val updatedMessages = it.toMutableList()
+                        updatedMessages.addAll(listOf(userMessage, botResponse))
+                        chatRef.update("messages", updatedMessages)
+                    }
+                } else {
+                    val chat = hashMapOf(
+                        "title" to chatTitle,
+                        "messages" to listOf(userMessage, botResponse),
+                        "timestamp" to System.currentTimeMillis()
+                    )
+                    chatRef.set(chat)
+                }
+            }
+        } else {
+            Log.w("ChatFragment", "No user is currently signed in")
+        }
     }
 
     private fun sendMessage() {
         val messageText = binding.question.text.toString()
         if (messageText.isNotEmpty()) {
             val userMessage = ChatMessage(messageText, true)
-            chatMessages.add(userMessage)
-            chatAdapter.notifyItemInserted(chatMessages.size - 1)
+            chatList.add(userMessage)
+            chatAdapter.notifyItemInserted(chatList.size - 1)
             binding.question.text?.clear()
             getResponse(messageText) { response ->
                 activity?.runOnUiThread {
                     val botMessage = ChatMessage(response, false)
-                    chatMessages.add(botMessage)
-                    chatAdapter.notifyItemInserted(chatMessages.size - 1)
-
+                    chatList.add(botMessage)
+                    chatAdapter.notifyItemInserted(chatList.size - 1)
+                    saveChatToHistory(messageText, response)
                 }
             }
+            currentChatTitle = null // Reset judul chat
         }
     }
+
 
     private fun getResponse(question: String, callback: (String) -> Unit) {
         val generativeModel = GenerativeModel(

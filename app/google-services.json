@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "846594039203-11g8pn501rjgah5p732qgsc3vrpirhmg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "capstone.app.mediguide",
+            "certificate_hash": "20f9556bc3c46d4d0ece415236edd14ee81f43ae"
+          }
+        },
+        {
           "client_id": "846594039203-6q5b548o1tg8lnttj0v96a6u8b4kaqug.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

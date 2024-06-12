@@ -14,6 +14,7 @@ import capstone.app.mediguide.fragment.ProfileFragment
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private var isHistoryFragmentVisible: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -30,6 +31,16 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isHistoryFragmentVisible = supportFragmentManager.findFragmentById(R.id.frameFragment) is HistoryFragment
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isHistoryFragmentVisible = false
     }
 
     private fun replaceFragment(fragment: Fragment) {

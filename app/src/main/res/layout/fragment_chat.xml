@@ -65,7 +65,7 @@
                 app:boxBackgroundColor="@android:color/transparent"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ib_send"
+                app:layout_constraintEnd_toStartOf="@id/sendButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:hintTextColor="@color/Primary">
@@ -81,7 +81,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
-                android:id="@+id/ib_send"
+                android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_input"

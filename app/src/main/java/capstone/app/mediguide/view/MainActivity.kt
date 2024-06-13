@@ -9,11 +9,13 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
 
         binding.loginButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))

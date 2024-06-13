@@ -25,11 +25,13 @@ class ChatAdapter(private val chatList: List<ChatMessage>) :
             holder.binding.botMessageTextView.visibility = View.GONE
             holder.binding.userMessageTextView.text = chatMessage.message
             holder.binding.userMessageTextView.setBackgroundResource(R.drawable.user_message_bg)
+            holder.binding.logo.visibility = View.GONE
         } else {
             holder.binding.userMessageTextView.visibility = View.GONE
             holder.binding.botMessageTextView.visibility = View.VISIBLE
             holder.binding.botMessageTextView.text = chatMessage.message
             holder.binding.botMessageTextView.setBackgroundResource(R.drawable.bot_message_bg)
+            holder.binding.logo.visibility = View.VISIBLE
         }
     }
 

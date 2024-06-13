@@ -19,6 +19,7 @@
             android:contentDescription="@string/back"
             android:src="@drawable/baseline_back"
             app:backgroundTint="@color/Primary"
+            app:fabSize="mini"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@android:color/white" />
@@ -43,7 +44,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@id/bottomView"
             app:layout_constraintTop_toBottomOf="@+id/floatingActionButton"
-            tools:listitem="@layout/fragment_chatbot" />
+            tools:listitem="@layout/item_chat" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomView"
@@ -61,14 +62,14 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="10dp"
-                app:boxStrokeColor="@color/Primary"
                 app:boxBackgroundColor="@android:color/transparent"
+                app:boxStrokeColor="@color/Primary"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/Primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/sendButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:hintTextColor="@color/Primary">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/question"

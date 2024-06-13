@@ -33,7 +33,6 @@ class ChatFragment : Fragment() {
     private var currentChatTitle: String? = null
     private var currentChatId: String? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -51,7 +50,7 @@ class ChatFragment : Fragment() {
             currentChatId = chatId
             fetchChatMessages(currentChatId!!)
         } else {
-            currentChatId = UUID.randomUUID().toString() // Generate new chat ID
+            currentChatId = UUID.randomUUID().toString()
         }
         if (chatId != null) {
             val db = FirebaseFirestore.getInstance()
@@ -180,11 +179,13 @@ class ChatFragment : Fragment() {
             chatList.add(userMessage)
             chatAdapter.notifyItemInserted(chatList.size - 1)
             binding.question.text?.clear()
+            binding.rvChatBot.smoothScrollToPosition(chatList.size - 1)
             getResponse(messageText) { response ->
                 activity?.runOnUiThread {
                     val botMessage = ChatMessage(response, false)
                     chatList.add(botMessage)
                     chatAdapter.notifyItemInserted(chatList.size - 1)
+                    binding.rvChatBot.smoothScrollToPosition(chatList.size - 1)
                     saveChatToHistory(messageText, response)
                 }
             }

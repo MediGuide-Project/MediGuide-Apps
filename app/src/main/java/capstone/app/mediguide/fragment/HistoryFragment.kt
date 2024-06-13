@@ -1,5 +1,6 @@
 package capstone.app.mediguide.fragment
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.FragmentHistoryBinding
 import capstone.app.mediguide.model.ChatHistory
@@ -53,6 +53,7 @@ class HistoryFragment : Fragment() {
         fetchChatHistory()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchChatHistory() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid
@@ -62,7 +63,6 @@ class HistoryFragment : Fragment() {
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
-                        val chatTitle = document
                         val title = document["title"] as? String
                         val chatId = document.id
                         if (title != null) {

@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.runBlocking
+import java.util.UUID
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
@@ -28,7 +29,9 @@ class ChatFragment : Fragment() {
     private val db: FirebaseFirestore = Firebase.firestore
     private var currentUser: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
+    private var chatId: String? = null
     private var currentChatTitle: String? = null
+    private var currentChatId: String? = null
 
 
     override fun onCreateView(
@@ -43,15 +46,22 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val chatId = arguments?.getString("chatId")
+        chatId = arguments?.getString("chatId")
+        if (chatId != null) {
+            currentChatId = chatId
+            fetchChatMessages(currentChatId!!)
+        } else {
+            currentChatId = UUID.randomUUID().toString() // Generate new chat ID
+        }
         if (chatId != null) {
             val db = FirebaseFirestore.getInstance()
-            db.collection("chats").document(chatId)
+            db.collection("chats").document(chatId!!)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val messages = document["messages"] as? List<String>
                         messages?.let {
+                            chatList.clear()
                             for (message in it) {
                                 addMessageToChat(message, isUser = false)
                             }
@@ -117,9 +127,8 @@ class ChatFragment : Fragment() {
     private fun saveChatToHistory(userMessage: String, botResponse: String) {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid
-        if (userId != null) {
-            val chatTitle = userMessage.take(30)
-            val chatRef = db.collection("chats").document(userId)
+        if (userId != null && currentChatId != null) {
+            val chatRef = db.collection("chats").document(currentChatId!!)
             chatRef.get().addOnSuccessListener { document ->
                 if (document.exists()) {
                     val existingMessages = document["messages"] as? List<String>
@@ -130,16 +139,38 @@ class ChatFragment : Fragment() {
                     }
                 } else {
                     val chat = hashMapOf(
-                        "title" to chatTitle,
+                        "title" to userMessage.take(30),
                         "messages" to listOf(userMessage, botResponse),
+                        "userId" to userId,
                         "timestamp" to System.currentTimeMillis()
                     )
                     chatRef.set(chat)
                 }
             }
         } else {
-            Log.w("ChatFragment", "No user is currently signed in")
+            Log.w("ChatFragment", "No user is currently signed in or chat ID is null")
         }
+    }
+
+    private fun fetchChatMessages(chatId: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("chats").document(chatId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val messages = document["messages"] as? List<String>
+                    messages?.let {
+                        for (message in it) {
+                            addMessageToChat(message, isUser = false)
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
     }
 
     private fun sendMessage() {
@@ -157,10 +188,9 @@ class ChatFragment : Fragment() {
                     saveChatToHistory(messageText, response)
                 }
             }
-            currentChatTitle = null // Reset judul chat
+            currentChatTitle = null
         }
     }
-
 
     private fun getResponse(question: String, callback: (String) -> Unit) {
         val generativeModel = GenerativeModel(

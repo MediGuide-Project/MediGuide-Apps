@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.ItemChatBinding
 import capstone.app.mediguide.model.ChatMessage
 
@@ -23,10 +24,12 @@ class ChatAdapter(private val chatList: List<ChatMessage>) :
             holder.binding.userMessageTextView.visibility = View.VISIBLE
             holder.binding.botMessageTextView.visibility = View.GONE
             holder.binding.userMessageTextView.text = chatMessage.message
+            holder.binding.userMessageTextView.setBackgroundResource(R.drawable.user_message_bg)
         } else {
             holder.binding.userMessageTextView.visibility = View.GONE
             holder.binding.botMessageTextView.visibility = View.VISIBLE
             holder.binding.botMessageTextView.text = chatMessage.message
+            holder.binding.botMessageTextView.setBackgroundResource(R.drawable.bot_message_bg)
         }
     }
 

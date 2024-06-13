@@ -1,5 +1,6 @@
 package capstone.app.mediguide.fragment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,26 +58,22 @@ class HistoryFragment : Fragment() {
         val userId = currentUser?.uid
         if (userId != null) {
             db.collection("chats")
-                .document(userId)
+                .whereEqualTo("userId", userId)
                 .get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val chatTitles = mutableSetOf<String>()
-                        val messages = document["messages"] as? List<String>
-                        messages?.let {
-                            for (message in it) {
-                                chatTitles.add(message.take(30))
-                            }
-                        }
-                        chatTitles.forEach { title ->
-                            val chatHistory = ChatHistory(title, userId)
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val chatTitle = document
+                        val title = document["title"] as? String
+                        val chatId = document.id
+                        if (title != null) {
+                            val chatHistory = ChatHistory(title, chatId)
                             updateChatHistory(chatHistory)
                         }
-                        historyAdapter.notifyDataSetChanged()
                     }
+                    historyAdapter.notifyDataSetChanged()
                 }
                 .addOnFailureListener { exception ->
-                    // Handle the error
+                    Log.w(TAG, "Error getting documents: ", exception)
                 }
         }
     }

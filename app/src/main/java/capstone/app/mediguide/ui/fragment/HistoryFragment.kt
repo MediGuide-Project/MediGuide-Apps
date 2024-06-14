@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.fragment
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
@@ -11,7 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.FragmentHistoryBinding
-import capstone.app.mediguide.model.ChatHistory
+import capstone.app.mediguide.data.model.ChatHistory
+import capstone.app.mediguide.ui.adapter.HistoryAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -30,8 +31,7 @@ class HistoryFragment : Fragment() {
     private var isHistoryFragmentVisible: Boolean = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
@@ -58,9 +58,7 @@ class HistoryFragment : Fragment() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid
         if (userId != null) {
-            db.collection("chats")
-                .whereEqualTo("userId", userId)
-                .get()
+            db.collection("chats").whereEqualTo("userId", userId).get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
                         val title = document["title"] as? String
@@ -75,8 +73,7 @@ class HistoryFragment : Fragment() {
                     setupRecyclerView()
                     historyAdapter.notifyDataSetChanged()
                     Log.d("HistoryFragment", "History loaded successfully")
-                }
-                .addOnFailureListener { exception ->
+                }.addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
         }
@@ -87,10 +84,8 @@ class HistoryFragment : Fragment() {
         bundle.putString("chatId", chatHistory.chatId)
         val chatFragment = ChatFragment()
         chatFragment.arguments = bundle
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frameFragment, chatFragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.frameFragment, chatFragment)
+            .addToBackStack(null).commit()
 
         updateChatHistory(chatHistory)
     }

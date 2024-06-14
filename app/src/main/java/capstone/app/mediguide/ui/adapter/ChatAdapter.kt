@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.ItemChatBinding
-import capstone.app.mediguide.model.ChatMessage
+import capstone.app.mediguide.data.model.ChatMessage
 
 class ChatAdapter(private val chatList: List<ChatMessage>) :
     RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {

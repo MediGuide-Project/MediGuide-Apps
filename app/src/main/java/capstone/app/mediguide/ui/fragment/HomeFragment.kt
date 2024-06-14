@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

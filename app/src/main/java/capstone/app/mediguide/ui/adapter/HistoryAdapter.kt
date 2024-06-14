@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import capstone.app.mediguide.R
-import capstone.app.mediguide.model.ChatHistory
+import capstone.app.mediguide.data.model.ChatHistory
 
-class HistoryAdapter(private val historyList: List<ChatHistory>, private val onItemClick: (ChatHistory) -> Unit) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+class HistoryAdapter(
+    private val historyList: List<ChatHistory>, private val onItemClick: (ChatHistory) -> Unit
+) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_history, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_chat_history, parent, false)
         return HistoryViewHolder(view)
     }
 

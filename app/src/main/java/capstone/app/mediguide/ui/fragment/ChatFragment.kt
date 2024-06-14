@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.fragment
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import capstone.app.mediguide.data.ApiService
-import capstone.app.mediguide.data.GenerateRequest
-import capstone.app.mediguide.data.MyNetworkClient
+import capstone.app.mediguide.data.api.ApiService
+import capstone.app.mediguide.data.api.GenerateRequest
+import capstone.app.mediguide.data.api.MyNetworkClient
 import capstone.app.mediguide.databinding.FragmentChatBinding
-import capstone.app.mediguide.model.ChatMessage
-import capstone.app.mediguide.view.HomeActivity
+import capstone.app.mediguide.data.model.ChatMessage
+import capstone.app.mediguide.ui.activity.HomeActivity
+import capstone.app.mediguide.ui.adapter.ChatAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -59,9 +60,7 @@ class ChatFragment : Fragment() {
         }
         if (chatId != null) {
             val db = FirebaseFirestore.getInstance()
-            db.collection("chats").document(chatId!!)
-                .get()
-                .addOnSuccessListener { document ->
+            db.collection("chats").document(chatId!!).get().addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val messages = document["messages"] as? List<String>
                         messages?.let {
@@ -73,8 +72,7 @@ class ChatFragment : Fragment() {
                     } else {
                         Log.d(TAG, "No such document")
                     }
-                }
-                .addOnFailureListener { exception ->
+                }.addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
                 }
         }
@@ -158,9 +156,7 @@ class ChatFragment : Fragment() {
 
     private fun fetchChatMessages(chatId: String) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("chats").document(chatId)
-            .get()
-            .addOnSuccessListener { document ->
+        db.collection("chats").document(chatId).get().addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val messages = document["messages"] as? List<String>
                     messages?.let {
@@ -171,8 +167,7 @@ class ChatFragment : Fragment() {
                 } else {
                     Log.d(TAG, "No such document")
                 }
-            }
-            .addOnFailureListener { exception ->
+            }.addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
     }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HistoryFragment"
-    android:background="@drawable/bg_main">
+    android:background="@drawable/bg_main"
+    tools:context=".ui.fragment.HistoryFragment">
 
     <TextView
         android:id="@+id/profileTV"
@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/history"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileTV"
-        tools:listitem="@layout/item_chat_history"/>
+        tools:listitem="@layout/item_chat_history" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

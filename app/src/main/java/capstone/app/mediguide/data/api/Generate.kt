@@ -1,4 +1,4 @@
-package capstone.app.mediguide.data
+package capstone.app.mediguide.data.api
 
 data class GenerateRequest(val Patient: String)
 

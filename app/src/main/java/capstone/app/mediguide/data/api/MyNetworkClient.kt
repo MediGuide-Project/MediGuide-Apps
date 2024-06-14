@@ -1,4 +1,4 @@
-package capstone.app.mediguide.data
+package capstone.app.mediguide.data.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,17 +11,14 @@ object MyNetworkClient {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
+    private val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
         .connectTimeout(180, TimeUnit.SECONDS) // Timeout untuk koneksi
         .readTimeout(180, TimeUnit.SECONDS)    // Timeout untuk membaca respon
         .writeTimeout(180, TimeUnit.SECONDS)   // Timeout untuk menulis permintaan
         .callTimeout(180, TimeUnit.SECONDS)    // Timeout total untuk request
         .build()
 
-    val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://34.101.106.128:8080/")
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    val retrofit: Retrofit =
+        Retrofit.Builder().baseUrl("http://34.101.106.128:8080/").client(client)
+            .addConverterFactory(GsonConverterFactory.create()).build()
 }

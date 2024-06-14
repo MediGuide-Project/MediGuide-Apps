@@ -1,4 +1,4 @@
-package capstone.app.mediguide.fragment
+package capstone.app.mediguide.ui.fragment
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.FragmentProfileBinding
-import capstone.app.mediguide.view.MainActivity
+import capstone.app.mediguide.ui.activity.MainActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

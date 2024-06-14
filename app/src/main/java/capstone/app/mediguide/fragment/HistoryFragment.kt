@@ -24,7 +24,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private val db: FirebaseFirestore = Firebase.firestore
     private lateinit var historyAdapter: HistoryAdapter
-    private val historyList = mutableListOf<ChatHistory>()
+    private var historyList = mutableListOf<ChatHistory>()
     private var currentUser: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
     private var isHistoryFragmentVisible: Boolean = false
@@ -65,12 +65,16 @@ class HistoryFragment : Fragment() {
                     for (document in documents) {
                         val title = document["title"] as? String
                         val chatId = document.id
+                        val timestamp = document["timestamp"] as? Long ?: 0
                         if (title != null) {
-                            val chatHistory = ChatHistory(title, chatId)
+                            val chatHistory = ChatHistory(title, chatId, timestamp)
                             updateChatHistory(chatHistory)
                         }
                     }
+                    historyList = historyList.sortedByDescending { it.timestamp }.toMutableList()
+                    setupRecyclerView()
                     historyAdapter.notifyDataSetChanged()
+                    Log.d("HistoryFragment", "History loaded successfully")
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
@@ -99,8 +103,19 @@ class HistoryFragment : Fragment() {
                 historyAdapter.notifyItemChanged(existingIndex)
             } else {
                 historyList.add(chatHistory)
+                historyList = historyList.sortedByDescending { it.timestamp }.toMutableList()
                 historyAdapter.notifyItemInserted(historyList.size - 1)
             }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        historyAdapter = HistoryAdapter(historyList) { chatHistory ->
+            openChat(chatHistory)
+        }
+        binding.rvChat.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = historyAdapter
         }
     }
 

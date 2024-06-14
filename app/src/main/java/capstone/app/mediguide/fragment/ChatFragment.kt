@@ -9,16 +9,21 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import capstone.app.mediguide.data.ApiService
+import capstone.app.mediguide.data.GenerateRequest
+import capstone.app.mediguide.data.MyNetworkClient
 import capstone.app.mediguide.databinding.FragmentChatBinding
 import capstone.app.mediguide.model.ChatMessage
 import capstone.app.mediguide.view.HomeActivity
-import com.google.ai.client.generativeai.GenerativeModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class ChatFragment : Fragment() {
@@ -194,17 +199,37 @@ class ChatFragment : Fragment() {
     }
 
     private fun getResponse(question: String, callback: (String) -> Unit) {
-        val generativeModel = GenerativeModel(
-            modelName = "gemini-pro",
-            apiKey = "AIzaSyBd9xYiHlUJOJWE9vpll2HmYccLvb_Hyy8"
-        )
+        val request = GenerateRequest(Patient = question)
+        val retrofit = MyNetworkClient.retrofit
+        val apiService = retrofit.create(ApiService::class.java)
 
-        runBlocking {
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = generativeModel.generateContent(question)
-                response.text?.let { callback(it) }
+                Log.d("ChatFragment", "Sending request to server...")
+                val response = apiService.generateResponse(request)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        Log.d("ChatFragment", "Received response from server")
+                        response.body()?.response?.let {
+                            Log.d("ChatFragment", "Response from server: $it")
+                            callback(it)
+                        } ?: run {
+                            Log.e("ChatFragment", "Response output is null")
+                            callback("No response from server")
+                        }
+                    } else {
+                        Log.e("ChatFragment", "Error response code: ${response.code()}")
+                        response.errorBody()?.string()?.let { errorBody ->
+                            Log.e("ChatFragment", "Error response body: $errorBody")
+                        }
+                        callback("Error response from server: ${response.code()}")
+                    }
+                }
             } catch (e: Exception) {
-                callback("Failed to get response from the server")
+                withContext(Dispatchers.Main) {
+                    Log.e("ChatFragment", "Error: ${e.message}", e)
+                    callback("Failed to get response from the server")
+                }
             }
         }
     }

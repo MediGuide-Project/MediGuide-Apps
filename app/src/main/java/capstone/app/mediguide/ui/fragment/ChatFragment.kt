@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import capstone.app.mediguide.R
 import capstone.app.mediguide.data.api.ApiService
 import capstone.app.mediguide.data.api.GenerateRequest
 import capstone.app.mediguide.data.api.MyNetworkClient
@@ -38,6 +41,8 @@ class ChatFragment : Fragment() {
     private var chatId: String? = null
     private var currentChatTitle: String? = null
     private var currentChatId: String? = null
+    private lateinit var backgroundMessage: TextView
+    private lateinit var logo1: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,6 +55,10 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        backgroundMessage = view.findViewById(R.id.background_message)
+        logo1 = view.findViewById(R.id.logo1)
+        backgroundMessage.text = getString(R.string.background_text)
 
         chatId = arguments?.getString("chatId")
         if (chatId != null) {
@@ -95,6 +104,7 @@ class ChatFragment : Fragment() {
             val message = binding.question.text.toString().trim()
             if (message.isNotEmpty()) {
                 addMessageToChat(message, true)
+                hideBackgroundMessage()
                 getResponse(message) { response ->
                     addMessageToChat(response, false)
                     saveChatToHistory(message, response)
@@ -158,6 +168,7 @@ class ChatFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         db.collection("chats").document(chatId).get().addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
+                    hideBackgroundMessage()
                     val messages = document["messages"] as? List<String>
                     messages?.let {
                         for (message in it) {
@@ -227,6 +238,11 @@ class ChatFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun hideBackgroundMessage() {
+        backgroundMessage.visibility = View.GONE
+        logo1.visibility = View.GONE
     }
 
     override fun onDestroyView() {

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.app.mediguide.R
@@ -42,9 +43,11 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        historyAdapter = HistoryAdapter(historyList) { chatHistory ->
+        historyAdapter = HistoryAdapter(historyList, { chatHistory ->
             openChat(chatHistory)
-        }
+        }, { chatHistory ->
+            showDeleteConfirmationDialog(chatHistory)
+        })
         binding.rvChat.apply {
             binding.rvChat.layoutManager = LinearLayoutManager(context)
             adapter = historyAdapter
@@ -105,13 +108,42 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        historyAdapter = HistoryAdapter(historyList) { chatHistory ->
+        historyAdapter = HistoryAdapter(historyList, { chatHistory ->
             openChat(chatHistory)
-        }
+        }, { chatHistory ->
+            showDeleteConfirmationDialog(chatHistory)
+        })
         binding.rvChat.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = historyAdapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(chatHistory: ChatHistory) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Chat")
+            .setMessage("Apakah anda yakin ingin menghapus chat ini?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                deleteChatHistory(chatHistory)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun deleteChatHistory(chatHistory: ChatHistory) {
+        db.collection("chats").document(chatHistory.chatId).delete()
+            .addOnSuccessListener {
+                Log.d(TAG, "Document successfully deleted!")
+                historyList.remove(chatHistory)
+                historyAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error deleting document", e)
+            }
     }
 
     override fun onDestroyView() {

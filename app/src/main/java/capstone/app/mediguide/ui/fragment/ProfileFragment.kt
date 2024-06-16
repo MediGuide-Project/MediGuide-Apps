@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
@@ -44,7 +45,7 @@ class ProfileFragment : Fragment() {
         updateProfileUI(currentUser)
 
         binding.Logout.setOnClickListener {
-            signOut()
+            showLogoutConfirmationDialog()
         }
     }
 
@@ -77,6 +78,21 @@ class ProfileFragment : Fragment() {
         } else {
             Glide.with(this).load(R.drawable.baseline_account_circle).into(binding.profileImageView)
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Logout")
+        builder.setMessage("Apakah Anda yakin ingin logout?")
+        builder.setPositiveButton("Ya") { dialog, which ->
+            // Logout user
+            signOut()
+        }
+        builder.setNegativeButton("Tidak") { dialog, which ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun signOut() {

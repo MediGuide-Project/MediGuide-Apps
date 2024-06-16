@@ -3,19 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="horizontal">
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_input"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    tools:ignore="UseCompoundDrawables">
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:padding="10dp"
-        android:background="@drawable/bg_input"
+        android:layout_weight="1"
+        android:background="@drawable/bg_inputan"
+        android:padding="12dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         tools:text="This is your chat history" />
+
+    <ImageView
+        android:id="@+id/deleteIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/button_delete"
+        android:src="@drawable/baseline_trash" />
 
 </LinearLayout>

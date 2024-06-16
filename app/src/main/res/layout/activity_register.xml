@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.RegisterActivity">
+    tools:context=".ui.activity.RegisterActivity">
 
     <TextView
         android:id="@+id/createyour"
@@ -227,7 +227,7 @@
             android:layout_marginEnd="4dp"
             android:text="@string/already_have_an_account"
             android:textAlignment="center"
-            android:textColor="#800095FF" />
+            android:textColor="@color/Primary" />
 
         <TextView
             android:id="@+id/textLogin"
@@ -237,7 +237,7 @@
             android:text="@string/login"
             android:textAlignment="center"
             android:textColor="@color/Primary"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </LinearLayout>

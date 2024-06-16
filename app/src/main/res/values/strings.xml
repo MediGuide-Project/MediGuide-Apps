@@ -37,4 +37,5 @@
     <string name="chatbot">MediGuide</string>
     <string name="type_in_your_question">Type in your question…</string>
     <string name="message_count">Messages count</string>
+    <string name="button_delete">button delete</string>
 </resources>

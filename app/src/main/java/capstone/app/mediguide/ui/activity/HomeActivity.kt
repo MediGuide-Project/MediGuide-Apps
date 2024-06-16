@@ -1,4 +1,4 @@
-package capstone.app.mediguide.view
+package capstone.app.mediguide.ui.activity
 
 import android.os.Bundle
 import android.view.View
@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import capstone.app.mediguide.R
 import capstone.app.mediguide.databinding.ActivityHomeBinding
-import capstone.app.mediguide.fragment.ChatFragment
-import capstone.app.mediguide.fragment.HistoryFragment
-import capstone.app.mediguide.fragment.HomeFragment
-import capstone.app.mediguide.fragment.ProfileFragment
+import capstone.app.mediguide.ui.fragment.ChatFragment
+import capstone.app.mediguide.ui.fragment.HistoryFragment
+import capstone.app.mediguide.ui.fragment.HomeFragment
+import capstone.app.mediguide.ui.fragment.ProfileFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -35,7 +35,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        isHistoryFragmentVisible = supportFragmentManager.findFragmentById(R.id.frameFragment) is HistoryFragment
+        isHistoryFragmentVisible =
+            supportFragmentManager.findFragmentById(R.id.frameFragment) is HistoryFragment
     }
 
     override fun onPause() {

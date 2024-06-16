@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/Secondary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,14 +16,13 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_rounded"
             android:contentDescription="@string/logo"
             android:padding="4dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.139"
+            app:layout_constraintTop_toBottomOf="@+id/floatingActionButton"
             app:srcCompat="@drawable/logowhite" />
 
         <TextView
@@ -32,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bot_message_bg"
             android:gravity="start"
@@ -40,12 +40,10 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/logo1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.155"
+            app:layout_constraintTop_toBottomOf="@+id/floatingActionButton"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -88,7 +86,7 @@
             android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/Secondary"
             android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -96,11 +94,10 @@
                 android:id="@+id/fill_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="10dp"
-                app:boxBackgroundColor="@android:color/transparent"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_question"
                 app:boxStrokeColor="@color/Primary"
                 app:endIconMode="clear_text"
                 app:hintTextColor="@color/Primary"
@@ -114,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/type_in_your_question"
+                    android:background="@drawable/bg_inputan"
                     android:inputType="text"
                     android:maxLines="3" />
 
@@ -125,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_input"
                 android:contentDescription="@string/send_a_message"
-                android:padding="18dp"
+                android:padding="22dp"
                 android:src="@drawable/btn_send"
                 app:layout_constraintBottom_toBottomOf="@id/fill_question"
                 app:layout_constraintEnd_toEndOf="parent"

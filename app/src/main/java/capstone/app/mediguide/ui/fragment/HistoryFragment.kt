@@ -120,30 +120,25 @@ class HistoryFragment : Fragment() {
     }
 
     private fun showDeleteConfirmationDialog(chatHistory: ChatHistory) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Delete Chat")
-            .setMessage("Apakah anda yakin ingin menghapus chat ini?")
+        AlertDialog.Builder(requireContext()).setTitle("Delete Chat")
+            .setMessage("Are you sure you want to delete this chat?")
             .setPositiveButton("Yes") { dialog, _ ->
                 deleteChatHistory(chatHistory)
                 dialog.dismiss()
-            }
-            .setNegativeButton("No") { dialog, _ ->
+            }.setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .create()
-            .show()
+            }.create().show()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun deleteChatHistory(chatHistory: ChatHistory) {
-        db.collection("chats").document(chatHistory.chatId).delete()
-            .addOnSuccessListener {
-                Log.d(TAG, "Document successfully deleted!")
-                historyList.remove(chatHistory)
-                historyAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error deleting document", e)
-            }
+        db.collection("chats").document(chatHistory.chatId).delete().addOnSuccessListener {
+            Log.d(TAG, "Document successfully deleted!")
+            historyList.remove(chatHistory)
+            historyAdapter.notifyDataSetChanged()
+        }.addOnFailureListener { e ->
+            Log.w(TAG, "Error deleting document", e)
+        }
     }
 
     override fun onDestroyView() {

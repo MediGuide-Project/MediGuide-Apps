@@ -38,4 +38,5 @@
     <string name="type_in_your_question">Type in your question…</string>
     <string name="message_count">Messages count</string>
     <string name="button_delete">button delete</string>
-</resources>
+    <string name="background_text">Hey there! Welcome to MediGuide, your trusted health companion. I\'m your virtual assistant, ready to help you with a smile. Let\'s embark on a journey to better health together!</string>
+    </resources>

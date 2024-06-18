@@ -69,7 +69,6 @@
             android:hint="@string/enter_your_name"
             android:inputType="text"
             android:paddingStart="44dp"
-            android:textColor="@color/Primary"
             tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 

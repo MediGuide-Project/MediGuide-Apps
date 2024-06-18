@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,11 +20,11 @@ import capstone.app.mediguide.databinding.FragmentChatBinding
 import capstone.app.mediguide.data.model.ChatMessage
 import capstone.app.mediguide.ui.activity.HomeActivity
 import capstone.app.mediguide.ui.adapter.ChatAdapter
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,8 +39,6 @@ class ChatFragment : Fragment() {
     private val db: FirebaseFirestore = Firebase.firestore
     private var currentUser: FirebaseUser? = null
     private lateinit var auth: FirebaseAuth
-    private var chatId: String? = null
-    private var currentChatTitle: String? = null
     private var currentChatId: String? = null
     private lateinit var backgroundMessage: TextView
     private lateinit var logo1: ImageView
@@ -60,31 +59,8 @@ class ChatFragment : Fragment() {
         logo1 = view.findViewById(R.id.logo1)
         backgroundMessage.text = getString(R.string.background_text)
 
-        chatId = arguments?.getString("chatId")
-        if (chatId != null) {
-            currentChatId = chatId
-            fetchChatMessages(currentChatId!!)
-        } else {
-            currentChatId = UUID.randomUUID().toString()
-        }
-        if (chatId != null) {
-            val db = FirebaseFirestore.getInstance()
-            db.collection("chats").document(chatId!!).get().addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val messages = document["messages"] as? List<String>
-                        messages?.let {
-                            chatList.clear()
-                            for (message in it) {
-                                addMessageToChat(message, isUser = false)
-                            }
-                        }
-                    } else {
-                        Log.d(TAG, "No such document")
-                    }
-                }.addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
-                }
-        }
+        currentChatId = arguments?.getString("chatId") ?: UUID.randomUUID().toString()
+        fetchChatMessages(currentChatId!!)
 
         binding.floatingActionButton.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -101,16 +77,7 @@ class ChatFragment : Fragment() {
 
         setupRecyclerView()
         binding.sendButton.setOnClickListener {
-            val message = binding.question.text.toString().trim()
-            if (message.isNotEmpty()) {
-                addMessageToChat(message, true)
-                hideBackgroundMessage()
-                getResponse(message) { response ->
-                    addMessageToChat(response, false)
-                    saveChatToHistory(message, response)
-                }
-                binding.question.text?.clear()
-            }
+            sendMessage()
         }
 
         binding.question.setOnEditorActionListener { v, actionId, event ->
@@ -137,7 +104,6 @@ class ChatFragment : Fragment() {
     }
 
     private fun saveChatToHistory(userMessage: String, botResponse: String) {
-        val currentUser = auth.currentUser
         val userId = currentUser?.uid
         if (userId != null && currentChatId != null) {
             val chatRef = db.collection("chats").document(currentChatId!!)
@@ -165,42 +131,36 @@ class ChatFragment : Fragment() {
     }
 
     private fun fetchChatMessages(chatId: String) {
-        val db = FirebaseFirestore.getInstance()
         db.collection("chats").document(chatId).get().addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    hideBackgroundMessage()
-                    val messages = document["messages"] as? List<String>
-                    messages?.let {
-                        for (message in it) {
-                            addMessageToChat(message, isUser = false)
-                        }
+            if (document.exists()) {
+                hideBackgroundMessage()
+                val messages = document["messages"] as? List<String>
+                messages?.let {
+                    chatList.clear() // Clear the chat list to avoid duplication
+                    for ((index, message) in it.withIndex()) {
+                        val isUser = index % 2 == 0 // Even index means bot message, odd index means user message
+                        addMessageToChat(message, isUser)
                     }
-                } else {
-                    Log.d(TAG, "No such document")
                 }
-            }.addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+            } else {
+                Log.d(TAG, "No such document")
             }
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "get failed with ", exception)
+        }
     }
 
     private fun sendMessage() {
         val messageText = binding.question.text.toString()
         if (messageText.isNotEmpty()) {
-            val userMessage = ChatMessage(messageText, true)
-            chatList.add(userMessage)
-            chatAdapter.notifyItemInserted(chatList.size - 1)
+            addMessageToChat(messageText, true)
+            hideBackgroundMessage()
             binding.question.text?.clear()
-            binding.rvChatBot.smoothScrollToPosition(chatList.size - 1)
+            hideKeyboard()
             getResponse(messageText) { response ->
-                activity?.runOnUiThread {
-                    val botMessage = ChatMessage(response, false)
-                    chatList.add(botMessage)
-                    chatAdapter.notifyItemInserted(chatList.size - 1)
-                    binding.rvChatBot.smoothScrollToPosition(chatList.size - 1)
-                    saveChatToHistory(messageText, response)
-                }
+                addMessageToChat(response, false)
+                saveChatToHistory(messageText, response)
             }
-            currentChatTitle = null
         }
     }
 
@@ -240,9 +200,14 @@ class ChatFragment : Fragment() {
         }
     }
 
-    fun hideBackgroundMessage() {
+    private fun hideBackgroundMessage() {
         backgroundMessage.visibility = View.GONE
         logo1.visibility = View.GONE
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = activity?.getSystemService(InputMethodManager::class.java)
+        inputMethodManager?.hideSoftInputFromWindow(binding.question.windowToken, 0)
     }
 
     override fun onDestroyView() {

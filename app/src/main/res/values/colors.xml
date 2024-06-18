@@ -15,5 +15,7 @@
 
     <color name="Primary">#0095FF</color>
     <color name="Secondary">#C3E6FF</color>
+    <color name="green">#D9FDD3</color>
+
 
 </resources>

@@ -83,12 +83,12 @@ class ProfileFragment : Fragment() {
     private fun showLogoutConfirmationDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Logout")
-        builder.setMessage("Apakah Anda yakin ingin logout?")
-        builder.setPositiveButton("Ya") { dialog, which ->
+        builder.setMessage("Are you sure you want to log out?")
+        builder.setPositiveButton("Yes") { dialog, which ->
             // Logout user
             signOut()
         }
-        builder.setNegativeButton("Tidak") { dialog, which ->
+        builder.setNegativeButton("No") { dialog, which ->
             dialog.dismiss()
         }
         val dialog = builder.create()

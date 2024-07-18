@@ -75,7 +75,6 @@ class RegisterActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
                         val user = auth.currentUser
-                        updateUI(user)
                         if (user != null) {
                             val userData = hashMapOf(
                                 "name" to name, "email" to email
@@ -83,8 +82,12 @@ class RegisterActivity : AppCompatActivity() {
                             db.collection("users").document(user.uid).set(userData)
                                 .addOnSuccessListener {
                                     Log.d(TAG, "DocumentSnapshot successfully written!")
+                                    auth.signOut()  // Sign out the user after successful registration
+                                    navigateToLogin()  // Navigate to login on successful registration
                                 }.addOnFailureListener { e ->
                                     Log.w(TAG, "Error writing document", e)
+                                    auth.signOut()  // Sign out the user even if writing to Firestore fails
+                                    navigateToLogin()  // Navigate to login even if writing to Firestore fails
                                 }
                         }
                     } else {
@@ -171,9 +174,16 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
+            // Start the HomeActivity only if the user is already signed in
             startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
             finish()
         }
+    }
+
+    private fun navigateToLogin() {
+        // Navigate to the LoginActivity
+        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+        finish()
     }
 
     override fun onStart() {
